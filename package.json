@@ -10,6 +10,12 @@
 		"start": "wrangler dev",
 		"test": "vitest"
 	},
+	"dependencies": {
+		"discord-api-types": "^0.38.40",
+		"discord-interactions": "^4.4.0",
+		"dotenv": "^17.3.1",
+		"itty-router": "^5.0.23"
+	},
 	"devDependencies": {
 		"@biomejs/biome": "2.4.5",
 		"@cloudflare/vitest-pool-workers": "^0.12.4",
