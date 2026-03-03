@@ -1,7 +1,23 @@
 {
 	"name": "disend",
-	"version": "0.0.0",
 	"private": true,
+	"description": "Self-hosted Discord app for sending message components on your Discord server.",
+	"homepage": "https://github.com/ryanlua/disend#readme",
+	"bugs": {
+		"url": "https://github.com/ryanlua/disend/issues"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/ryanlua/disend.git"
+	},
+	"funding": {
+		"type": "individual",
+		"url": "https://github.com/sponsors/ryanlua"
+	},
+	"license": "MIT",
+	"author": "Ryan Luu <ryan.luu@ryanluu.dev>",
+	"type": "module",
+	"main": "src/server.js",
 	"scripts": {
 		"deploy": "wrangler deploy",
 		"fix": "biome check --write .",
