@@ -71,9 +71,8 @@ router.post('/interactions', async (request, env, ctx) => {
 				ctx.waitUntil(handleSendCommand(interaction, env));
 
 				return new JsonResponse({
-					type: InteractionResponseType.ChannelMessageWithSource,
+					type: InteractionResponseType.DeferredChannelMessageWithSource,
 					data: {
-						content: 'Successfully sent message payload to channel.',
 						flags: MessageFlags.Ephemeral,
 					},
 				});
