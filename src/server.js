@@ -9,6 +9,7 @@ import {
 import { verifyKey } from 'discord-interactions';
 import { AutoRouter } from 'itty-router';
 import { SEND_COMMAND } from './commands.js';
+import { handleSendCommand } from './send.js';
 
 /**
  * @typedef {Object} Env
@@ -66,12 +67,7 @@ router.post('/interactions', async (request, env, ctx) => {
 		// Most user commands will come as `APPLICATION_COMMAND`.
 		switch (interaction.data.name.toLowerCase()) {
 			case SEND_COMMAND.name.toLowerCase(): {
-				return new JsonResponse({
-					type: InteractionResponseType.ChannelMessageWithSource,
-					data: {
-						content: 'Hello world 👋',
-					},
-				});
+				return handleSendCommand(interaction, env, ctx);
 			}
 			default:
 				return new JsonResponse({ error: 'Unknown Type' }, { status: 400 });
