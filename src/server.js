@@ -5,6 +5,7 @@
 import {
 	InteractionResponseType,
 	InteractionType,
+	MessageFlags,
 } from 'discord-api-types/v10';
 import { verifyKey } from 'discord-interactions';
 import { AutoRouter } from 'itty-router';
@@ -67,7 +68,15 @@ router.post('/interactions', async (request, env, ctx) => {
 		// Most user commands will come as `APPLICATION_COMMAND`.
 		switch (interaction.data.name.toLowerCase()) {
 			case SEND_COMMAND.name.toLowerCase(): {
-				return handleSendCommand(interaction, env, ctx);
+				ctx.waitUntil(handleSendCommand(interaction, env));
+
+				return new JsonResponse({
+					type: InteractionResponseType.ChannelMessageWithSource,
+					data: {
+						content: 'Successfully sent message payload to channel.',
+						flags: MessageFlags.Ephemeral,
+					},
+				});
 			}
 			default:
 				return new JsonResponse({ error: 'Unknown Type' }, { status: 400 });
