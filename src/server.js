@@ -8,7 +8,6 @@ import {
 } from 'discord-api-types/v10';
 import { verifyKey } from 'discord-interactions';
 import { AutoRouter } from 'itty-router';
-import { generateMessageClip } from './clip.js';
 import { SEND_COMMAND } from './commands.js';
 
 /**
@@ -70,7 +69,7 @@ router.post('/interactions', async (request, env, ctx) => {
 				return new JsonResponse({
 					type: InteractionResponseType.ChannelMessageWithSource,
 					data: {
-						content: "Hello world 👋",
+						content: 'Hello world 👋',
 					},
 				});
 			}
