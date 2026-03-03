@@ -5,7 +5,7 @@
 {
 	"$schema": "node_modules/wrangler/config-schema.json",
 	"name": "disend",
-	"main": "src/index.js",
+	"main": "src/server.js",
 	"compatibility_date": "2026-03-03",
 	"observability": {
 		"enabled": true
