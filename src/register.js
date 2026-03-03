@@ -4,7 +4,10 @@
  * to be run once.
  */
 
+import dotenv from 'dotenv';
 import { SEND_COMMAND } from './commands.js';
+
+dotenv.config({ path: '.dev.vars' });
 
 const token = process.env.DISCORD_TOKEN;
 const applicationId = process.env.DISCORD_APPLICATION_ID;
