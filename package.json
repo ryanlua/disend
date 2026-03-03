@@ -4,11 +4,14 @@
 	"private": true,
 	"scripts": {
 		"deploy": "wrangler deploy",
-		"dev": "wrangler dev",
+		"fix": "biome check --write .",
+		"lint": "biome check .",
+		"register": "node src/register.js",
 		"start": "wrangler dev",
 		"test": "vitest"
 	},
 	"devDependencies": {
+		"@biomejs/biome": "2.4.5",
 		"@cloudflare/vitest-pool-workers": "^0.12.4",
 		"vitest": "~3.2.0",
 		"wrangler": "^4.69.0"

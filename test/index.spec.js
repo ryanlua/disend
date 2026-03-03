@@ -1,5 +1,10 @@
-import { env, createExecutionContext, waitOnExecutionContext, SELF } from 'cloudflare:test';
-import { describe, it, expect } from 'vitest';
+import {
+	createExecutionContext,
+	env,
+	SELF,
+	waitOnExecutionContext,
+} from 'cloudflare:test';
+import { describe, expect, it } from 'vitest';
 import worker from '../src';
 
 describe('Hello World worker', () => {
