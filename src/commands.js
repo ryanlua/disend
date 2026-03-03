@@ -14,7 +14,7 @@ import {
  */
 export const SEND_COMMAND = {
 	name: 'Send message',
-	description: 'Send a message to the channel',
+	description: 'Send a message payload to the channel',
 	integration_types: [
 		ApplicationIntegrationType.GuildInstall,
 		ApplicationIntegrationType.UserInstall,
