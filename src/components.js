@@ -7,7 +7,7 @@ import {
 /**
  * Component for displaying an error message.
  * @param {string} errorStacktrace - The error stacktrace to display
- * @returns {import('discord-api-types/v10').RESTPostAPIWebhookWithTokenJSONBody}
+ * @returns {import('discord-api-types/v10').APIInteractionResponseCallbackData}
  */
 export const ERROR_COMPONENT = (errorStacktrace) => ({
 	flags: MessageFlags.IsComponentsV2,
