@@ -13,7 +13,7 @@ import {
  * @type {import('discord-api-types/v10').RESTPostAPIApplicationCommandsJSONBody}
  */
 export const SEND_COMMAND = {
-	name: 'Send message',
+	name: 'send',
 	description: 'Send a message payload to the channel',
 	integration_types: [
 		ApplicationIntegrationType.GuildInstall,
