@@ -10,7 +10,7 @@ import {
 import { verifyKey } from 'discord-interactions';
 import { AutoRouter } from 'itty-router';
 import { SEND_COMMAND } from './commands.js';
-import { handleSendCommand } from './send.js';
+import { handleSendCommand, handleSendModalSubmit } from './send.js';
 
 /**
  * @typedef {Object} Env
@@ -69,18 +69,26 @@ router.post('/interactions', async (request, env, ctx) => {
 		// Most user commands will come as `APPLICATION_COMMAND`.
 		switch (interaction.data.name.toLowerCase()) {
 			case SEND_COMMAND.name.toLowerCase(): {
-				ctx.waitUntil(handleSendCommand(interaction, env));
-
-				return new JsonResponse({
-					type: InteractionResponseType.DeferredChannelMessageWithSource,
-					data: {
-						flags: MessageFlags.Ephemeral,
-					},
-				});
+				return new JsonResponse(handleSendCommand());
 			}
 			default:
 				return new JsonResponse({ error: 'Unknown Type' }, { status: 400 });
 		}
+	}
+
+	if (interaction.type === InteractionType.ModalSubmit) {
+		if (interaction.data.custom_id === 'message_payload_modal') {
+			ctx.waitUntil(handleSendModalSubmit(interaction, env));
+
+			return new JsonResponse({
+				type: InteractionResponseType.DeferredChannelMessageWithSource,
+				data: {
+					flags: MessageFlags.Ephemeral,
+				},
+			});
+		}
+
+		return new JsonResponse({ error: 'Unknown modal' }, { status: 400 });
 	}
 
 	console.error('Unknown Type');
