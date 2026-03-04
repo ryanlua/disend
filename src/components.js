@@ -19,17 +19,6 @@ export const ERROR_COMPONENT = (errorStacktrace) => ({
 					type: ComponentType.TextDisplay,
 					content: `## Error\n\nUnknown error occurred:\n\`\`\`\n${errorStacktrace}\n\`\`\``,
 				},
-				{
-					type: ComponentType.ActionRow,
-					components: [
-						{
-							type: ComponentType.Button,
-							style: ButtonStyle.Link,
-							label: 'Support Server',
-							url: 'https://discord.gg/XkAHS8MkTe',
-						},
-					],
-				},
 			],
 		},
 	],
