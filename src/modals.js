@@ -8,7 +8,7 @@ import {
  * Modal for getting the message payload.
  * @returns {import('discord-api-types/v10').APIModalInteractionResponse}
  */
-export const PAYLOAD_MODAL = () => ({
+export const PAYLOAD_MODAL = {
 	type: InteractionResponseType.Modal,
 	data: {
 		custom_id: 'message_payload_modal',
@@ -29,4 +29,4 @@ export const PAYLOAD_MODAL = () => ({
 			},
 		],
 	},
-});
+};

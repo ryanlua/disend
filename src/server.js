@@ -10,6 +10,7 @@ import {
 import { verifyKey } from 'discord-interactions';
 import { AutoRouter } from 'itty-router';
 import { SEND_COMMAND } from './commands.js';
+import { PAYLOAD_MODAL } from './modals.js';
 import { handleSendCommand, handleSendModalSubmit } from './send.js';
 
 /**
@@ -72,23 +73,31 @@ router.post('/interactions', async (request, env, ctx) => {
 				return new JsonResponse(handleSendCommand());
 			}
 			default:
-				return new JsonResponse({ error: 'Unknown Type' }, { status: 400 });
+				return new JsonResponse(
+					{ error: 'Unknown Application Command' },
+					{ status: 400 },
+				);
 		}
 	}
 
 	if (interaction.type === InteractionType.ModalSubmit) {
-		if (interaction.data.custom_id === 'message_payload_modal') {
-			ctx.waitUntil(handleSendModalSubmit(interaction, env));
+		switch (interaction.data.custom_id.toLowerCase()) {
+			case PAYLOAD_MODAL.data.custom_id.toLowerCase(): {
+				ctx.waitUntil(handleSendModalSubmit(interaction, env));
 
-			return new JsonResponse({
-				type: InteractionResponseType.DeferredChannelMessageWithSource,
-				data: {
-					flags: MessageFlags.Ephemeral,
-				},
-			});
+				return new JsonResponse({
+					type: InteractionResponseType.DeferredChannelMessageWithSource,
+					data: {
+						flags: MessageFlags.Ephemeral,
+					},
+				});
+			}
+			default:
+				return new JsonResponse(
+					{ error: 'Unknown Modal Submit' },
+					{ status: 400 },
+				);
 		}
-
-		return new JsonResponse({ error: 'Unknown modal' }, { status: 400 });
 	}
 
 	console.error('Unknown Type');
