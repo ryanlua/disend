@@ -28,7 +28,7 @@ After you create your app, you'll land on the **General Information** page of th
 
 Here you will also find your app credentials that Cloudflare needs to deploy your Disend clone.
 
-[Create the Disend Workers application](https://deploy.workers.cloudflare.com/?url=https%3A%2F%2Fgithub.com%2Fryanlua%2Fdisend) or press the **Deploy to Cloudflare** button on the top of this page and enter the following values from your Discord app's settings:
+[Create the Disend Workers application](https://deploy.workers.cloudflare.com/?url=https%3A%2F%2Fgithub.com%2Fryanlua%2Fdisend) or click the **Deploy to Cloudflare** button on the top of this page and enter the following values from your Discord app's settings:
 
 * On the **General Information** page, copy the value for **Application ID**. In Cloudflare, enter your pasted value in `DISCORD_APPLICATION_ID`
 
