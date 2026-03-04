@@ -16,6 +16,7 @@ import { handleSendCommand } from './send.js';
  * @typedef {Object} Env
  * @property {string} DISCORD_PUBLIC_KEY
  * @property {string} DISCORD_APPLICATION_ID
+ * @property {string} DISCORD_TOKEN
  */
 
 class JsonResponse extends Response {
