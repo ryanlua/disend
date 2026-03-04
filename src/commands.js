@@ -4,8 +4,7 @@
 
 import {
 	ApplicationCommandType,
-	ApplicationIntegrationType,
-	InteractionContextType,
+	PermissionFlagsBits,
 } from 'discord-api-types/v10';
 
 /**
@@ -15,13 +14,6 @@ import {
 export const SEND_COMMAND = {
 	name: 'send',
 	description: 'Send a message payload to the channel',
-	integration_types: [
-		ApplicationIntegrationType.GuildInstall,
-		ApplicationIntegrationType.UserInstall,
-	],
-	contexts: [
-		InteractionContextType.PrivateChannel,
-		InteractionContextType.Guild,
-	],
+	default_member_permissions: String(PermissionFlagsBits.ManageWebhooks),
 	type: ApplicationCommandType.ChatInput,
 };
