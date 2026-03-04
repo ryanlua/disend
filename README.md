@@ -44,3 +44,79 @@ Here you will also find your app credentials that Cloudflare needs to deploy you
 
 > [!WARNING]
 > Make sure to never share your token or check it into any kind of version control or someone could take control of your bot.
+
+When you have entered all the values, click **Save and deploy**. This will deploy your Disend clone to Cloudflare Workers.
+
+### Configuring your Discord app
+
+You will need to configure your Discord app to allow it to be installed on servers along with setting up an install link for users to install your app. Your app can either be public or private. If your app is public, then anyone can find it and install it. If your app is private, then only you can install it using the install link.
+
+<details>
+
+<summary>Private Bot</summary>
+
+#### OAuth2 Authorizations
+
+On the **Bot** page, then under **Authorization Flow**, make sure "Public Bot" is not selected.
+
+#### Installation Contexts
+
+On the **Installation** page, then under **Installation Contexts** make sure "Guild Install" is selected.
+
+![Installation contexts section on Installation page in App Settings](assets/installation-contexts.png)
+
+#### Install Link
+
+On the **Installation** page, go to the **Install Link** section and select "None".
+
+#### Add App
+
+On the **OAuth2** page, then under **OAuth2 URL Generator**, add the `applications.commands` and `bot` scope and under **Bot Permissions**, add the `Send Messages` and `View Channels` permission.
+
+Copy the **Generated URL** and paste it in your browser to add your bot to your server. It should look like this:
+
+```
+https://discord.com/oauth2/authorize?client_id=1239324702514745386&permissions=3072&integration_type=0&scope=bot
+```
+
+</details>
+
+<details>
+
+<summary>Public Bot</summary>
+
+#### OAuth2 Authorizations
+
+On the **Bot** page, then under **Authorization Flow**, make sure "Public Bot" is selected.
+
+#### Installation Contexts
+
+On the **Installation** page, then under **Installation Contexts** make sure "Guild Install" is selected.
+
+![Installation contexts section on Installation page in App Settings](assets/installation-contexts.png)
+
+#### Install Link
+
+On the **Installation** page, go to the **Install Link** section and select "Discord Provided Link" if it's not already selected.
+
+When **Discord Provided Link** is selected, a new **Default Install Settings** section will appear, which we'll configure next.
+
+![Install link section on Installation page in App Settings](assets/install-link.png)
+
+#### Scopes and Bot Permissions
+
+On the **Installation** page in the **Default Install Settings** section:
+
+* For **Guild Install**, add the `applications.commands` and `bot` scope and the `Send Messages` and `View Channels` permission.
+
+![Default Install Settings on Installation page in App Settings](assets/default-install-settings.png)
+
+#### Add App
+
+On the **Installation** page, go to the **Install Link** section and copy the Discord provided install link and paste it in your browser to add your bot to your server. It should look like this:
+
+```
+https://discord.com/oauth2/authorize?client_id=1239324702514745386
+```
+
+</details>
