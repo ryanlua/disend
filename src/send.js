@@ -1,3 +1,9 @@
+/**
+ * Sends a message payloads that are specified by the user in a modal.
+ * This file was made using AI and hasn't been fully tested.
+ * @todo: Clean up and improve error handling.
+ */
+
 import { MessageFlags } from 'discord-api-types/v10';
 import { ERROR_COMPONENT } from './components.js';
 import { PAYLOAD_MODAL } from './modals.js';
