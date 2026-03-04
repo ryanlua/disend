@@ -4,7 +4,7 @@
  * @todo: Clean up and improve error handling.
  */
 
-import { MessageFlags } from 'discord-api-types/v10';
+import { ComponentType, MessageFlags } from 'discord-api-types/v10';
 import { ERROR_COMPONENT } from './components.js';
 import { PAYLOAD_MODAL } from './modals.js';
 
@@ -58,16 +58,130 @@ export function handleSendCommand() {
  * @param {import('discord-api-types/v10').APIModalSubmitInteraction} interaction - The modal submit interaction.
  * @returns {string}
  */
-function extractModalPayloadText(interaction) {
-	for (const row of interaction.data.components) {
-		for (const component of row.components) {
-			if (component.custom_id === 'payload_input') {
-				return component.value;
+function findComponentByCustomId(interaction, customId) {
+	const stack = [...interaction.data.components];
+
+	while (stack.length > 0) {
+		const current = stack.pop();
+		if (!current) {
+			continue;
+		}
+
+		if ('custom_id' in current && current.custom_id === customId) {
+			return current;
+		}
+
+		if ('component' in current && current.component) {
+			stack.push(current.component);
+		}
+
+		if ('components' in current && Array.isArray(current.components)) {
+			for (const nestedComponent of current.components) {
+				stack.push(nestedComponent);
 			}
 		}
 	}
 
+	return null;
+}
+
+/**
+ * @param {import('discord-api-types/v10').APIModalSubmitInteraction} interaction
+ * @returns {string}
+ */
+function extractModalPayloadText(interaction) {
+	const payloadComponent = findComponentByCustomId(
+		interaction,
+		'payload_input',
+	);
+	if (payloadComponent && 'value' in payloadComponent) {
+		return payloadComponent.value;
+	}
+
 	throw new Error('Payload input not found in modal submission.');
+}
+
+/**
+ * @param {import('discord-api-types/v10').APIModalSubmitInteraction} interaction
+ * @returns {string[]}
+ */
+function extractUploadedAttachmentIds(interaction) {
+	const fileUploadComponent = findComponentByCustomId(
+		interaction,
+		'payload_files',
+	);
+	if (!fileUploadComponent) {
+		return [];
+	}
+
+	if (
+		!('type' in fileUploadComponent) ||
+		fileUploadComponent.type !== ComponentType.FileUpload
+	) {
+		return [];
+	}
+
+	if (
+		'values' in fileUploadComponent &&
+		Array.isArray(fileUploadComponent.values)
+	) {
+		return fileUploadComponent.values;
+	}
+
+	return [];
+}
+
+/**
+ * @param {import('discord-api-types/v10').RESTPostAPIChannelMessageJSONBody} payload
+ * @param {import('discord-api-types/v10').APIModalSubmitInteraction} interaction
+ * @returns {import('discord-api-types/v10').RESTPostAPIChannelMessageJSONBody}
+ */
+function withUploadedAttachments(payload, interaction) {
+	const uploadedAttachmentIds = extractUploadedAttachmentIds(interaction);
+	if (uploadedAttachmentIds.length === 0) {
+		return payload;
+	}
+
+	const resolvedAttachments = interaction.data.resolved?.attachments;
+	if (!resolvedAttachments) {
+		throw new Error(
+			'Uploaded files were not present in resolved attachment data from Discord.',
+		);
+	}
+
+	const attachmentsById = new Map(Object.entries(resolvedAttachments));
+	const existingAttachments = Array.isArray(payload.attachments)
+		? payload.attachments
+		: [];
+
+	const attachmentExists = new Set(
+		existingAttachments.map((item) => String(item.id)),
+	);
+	const mergedAttachments = [...existingAttachments];
+
+	for (const attachmentId of uploadedAttachmentIds) {
+		if (attachmentExists.has(String(attachmentId))) {
+			continue;
+		}
+
+		const attachment = attachmentsById.get(String(attachmentId));
+		if (!attachment) {
+			throw new Error(
+				`Uploaded file ${attachmentId} was not found in resolved attachment data.`,
+			);
+		}
+
+		mergedAttachments.push({
+			id: attachment.id,
+			filename: attachment.filename,
+			description: attachment.description,
+		});
+	}
+
+	return {
+		...payload,
+		attachments: mergedAttachments,
+	};
 }
 
 /**
@@ -80,8 +194,12 @@ export async function handleSendModalSubmit(interaction, env) {
 		const payloadText = extractModalPayloadText(interaction);
 		/** @type {import('discord-api-types/v10').RESTPostAPIChannelMessageJSONBody} */
 		const parsedPayload = JSON.parse(payloadText);
+		const payloadWithUploads = withUploadedAttachments(
+			parsedPayload,
+			interaction,
+		);
 
-		await sendMessagePayload(interaction, parsedPayload, env);
+		await sendMessagePayload(interaction, payloadWithUploads, env);
 		await sendFollowup(interaction, env, {
 			content: 'Successfully sent message payload to channel.',
 			flags: MessageFlags.Ephemeral,
