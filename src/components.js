@@ -1,8 +1,4 @@
-import {
-	ButtonStyle,
-	ComponentType,
-	MessageFlags,
-} from 'discord-api-types/v10';
+import { ComponentType, MessageFlags } from 'discord-api-types/v10';
 
 /**
  * Component for displaying an error message.
