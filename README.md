@@ -120,3 +120,11 @@ https://discord.com/oauth2/authorize?client_id=1239324702514745386
 ```
 
 </details>
+
+#### Interaction Endpoint URL
+
+Go to your app's settings and on the **General Information** page under **Interaction Endpoint URL**, paste your workers.dev URL and append `/interactions`.
+
+![Interaction Endpoint URL on General Information page in App Settings](assets/interactions-endpoint-url.png)
+
+Click **Save Changes** and ensure your endpoint is successfully verified.
