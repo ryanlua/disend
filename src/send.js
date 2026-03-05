@@ -50,7 +50,7 @@ async function sendMessagePayload(interaction, payload, env) {
  * @returns {import('discord-api-types/v10').APIModalInteractionResponse}
  */
 export function handleSendCommand() {
-	return PAYLOAD_MODAL();
+	return PAYLOAD_MODAL;
 }
 
 /**
