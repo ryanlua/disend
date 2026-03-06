@@ -17,7 +17,9 @@ Apps like [Discohook](https://discohook.app/) allow you to create the message pa
 
 ### Example payloads
 
-#### Basic message with components
+<details>
+
+<summary>Message with link buttons</summary>
 
 ```json
 {
@@ -50,8 +52,11 @@ Apps like [Discohook](https://discohook.app/) allow you to create the message pa
 
 ![Example message with components](assets/example-message.png)
 
+</details>
 
-#### Server rules
+<details>
+
+<summary>Server rules</summary>
 
 ```json
 {
@@ -96,6 +101,8 @@ Apps like [Discohook](https://discohook.app/) allow you to create the message pa
 ```
 
 ![Example server rules message](assets/example-rules.png)
+
+</details>
 
 ## Self-hosting
 
