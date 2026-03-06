@@ -107,3 +107,15 @@ Apps like [Discohook](https://discohook.app/) allow you to create the message pa
 ## Self-hosting
 
 Self hosting is free and allows you to customize what Disend looks like. If you want to self-host Disend, follow the instructions in the [contributing guidelines](CONTRIBUTING.md).
+
+## Support Server
+
+If you have any questions, suggestions, or need help with Disend, feel free to join the support server on Discord.
+
+* Share feedback or your experience
+* Get technical support with Disend
+* Be the first to know about updates
+
+Disend is a project under [Disclip](https://github.com/ryanlua/disclip) and uses the Disclip server for support.
+
+[![Support Server](https://discord.com/api/guilds/1387009688641732639/widget.png?style=banner4)](https://discord.gg/XkAHS8MkTe)
