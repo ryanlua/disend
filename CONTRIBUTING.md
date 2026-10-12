@@ -28,7 +28,7 @@ Navigate to the cloned directory and install dependencies:
 
 ```console
 cd disend
-npm install
+npm ci
 ```
 
 ### Getting app credentials
